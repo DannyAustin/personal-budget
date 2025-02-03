@@ -5,9 +5,11 @@
 body {
     font-size: 10px;
     font-family: Tahoma, Arial;
+    line-height: 1.5; /* This is an A11y Change */
 }
 
-nav {
+/* Updated nav to reflect semantic structure */
+header nav {
     width: 100%;
     background-color: #4d5791;
     height: 44px;
@@ -17,7 +19,7 @@ nav {
 nav ul,
 nav ul li {
     margin: 0;
-    padding: 0 ;
+    padding: 0;
     list-style: none;
     display: inline-block;
 }
@@ -32,77 +34,122 @@ nav ul li a {
     margin: 0;
 }
 
-nav ul li a:hover  {
+nav ul li a:hover {
     background-color: white;
     color: #4d5791;
 }
 
-div.hero {
+/* Updated hero section for better responsiveness and A11y */
+.hero {
     height: 350px;
     background-color: #b4c6f0;
     background-image: url('bg.png');
-    background-size: 400px;
+    background-size: cover; /* This is an A11y Change */
     background-repeat: no-repeat;
-    background-position: center bottom;
+    background-position: center;
     padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-div.hero h1,
-div.hero h2 {
+.hero h1,
+.hero h2 {
     text-align: center;
     margin: 0;
 }
 
-div.hero h1 {
+.hero h1 {
     color: #fff;
     font-size: 4.2em;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* This is an SEO Change */
 }
 
-div.hero h2 {
+.hero h2 {
     color: #4d5791;
+    font-size: 2em; /* This is an A11y Change */
 }
 
+/* Updated main content styles */
 main {
     padding: 40px;
     width: 100%;
+    max-width: 1024px;
+    margin: auto;
 }
 
+/* Improved page-area structure */
 .page-area {
     max-width: 768px;
-    display: inline-block;
+    display: flex; /* This is an A11y Change */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
 
-footer {
-    height: 50px;
-    background-color: #b4c6f0;
-    padding: 40px;
-}
-
-.skip {
-    display: block;
-    line-height: 44px;
-    padding: 0 20px;
-    margin-top: -44px;
-}
-
-.skip:focus {
-    margin-top: 0;
-}
-
-.center {
-    text-align: center;
-}
-
+/* Improved article readability */
 main article {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     max-width: 340px;
     text-align: justify;
-    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9; /* This is an SEO Change */
+    border-radius: 8px; /* Added for modern UI improvement */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Styling for better contrast */
+main article h1 {
+    color: #4d5791;
+    font-size: 1.8em;
+}
+
+/* Ensure accessibility for canvas */
+canvas {
+    display: block;
+    margin: auto;
+}
+
+/* Footer improvements */
+footer {
+    height: auto;
+    background-color: #b4c6f0;
+    padding: 20px; /* Adjusted for better spacing */
+    text-align: center;
+    font-size: 1.2em; /* This is an A11y Change */
+    color: #4d5791;
+}
+
+/* Skip link improvement */
+.skip {
+    display: block;
+    position: absolute;
+    top: -44px;
+    left: 0;
+    background: white;
+    color: #4d5791;
+    padding: 10px;
+    font-size: 1.2em;
+}
+
+.skip:focus {
+    top: 0;
+}
+
+/* Responsive Design */
 @media screen and (min-width: 768px) {
+    .hero {
+        height: 400px;
+    }
+
+    .page-area {
+        flex-direction: row;
+    }
+
     main article {
         margin: 10px;
     }
