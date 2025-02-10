@@ -15,6 +15,9 @@
     
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="main.css">
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
 </head>
 <body>
 
@@ -80,6 +83,14 @@
                     <canvas id="myChart" width="400" height="400" aria-label="Budget Allocation Pie Chart" role="img"></canvas>
                 </p>
             </article>
+
+            <article>
+                <h1>Budget Bar Chart</h1>
+                <p>
+                    <svg id="d3Chart" width="400" height="400"></svg>
+                </p>
+            </article>
+            
         </div>
     </main>
 
@@ -148,15 +159,14 @@
                         '#8e24aa',
                         '#ff7043',
                         '#00acc1'
-                ],
-                }
-            ],
+                ]
+            }],
         
-        labels: [];
-            };
+        labels: []
+    };
         
         function createChart() {
-            var ctx = document.getElementsById("myChart").getContext('2d');
+            var ctx = document.getElementById("myChart").getContext('2d');
             var myPieChart = new Chart(ctx, {
                 type: 'pie',
                 data: dataSource
@@ -172,19 +182,13 @@
                     dataSource.labels[i] = res.data.myBudget[i].title;
                 }
                 createChart();
+                
             })
-            .catch(function (error) {
-                console.error('Error fetching budget data:', error);
-            });
+    
     }
 
     getBudget();
-createChart();
 
-
-cript>
-
-        createChart();
-        </script>
+    </script>
 </body>
 </html>
