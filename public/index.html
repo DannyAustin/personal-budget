@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="main.css">
 
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script> 
 
 </head>
 <body>
@@ -190,5 +190,53 @@
     getBudget();
 
     </script>
+
+    
+<script>
+    function createD3Chart(data) {
+        var svg = d3.select("#d3Chart"),
+            margin = { top: 20, right: 30, bottom: 40, left: 90 },
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom;
+
+        var g = svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var x = d3.scaleLinear().range([0, width]);
+        var y = d3.scaleBand().range([height, 0]).padding(0.1);
+
+        x.domain([0, d3.max(data, d => d.budget)]);
+        y.domain(data.map(d => d.title));
+
+        g.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        g.append("g")
+            .call(d3.axisLeft(y));
+
+        g.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("y", d => y(d.title))
+            .attr("width", d => x(d.budget))
+            .attr("height", y.bandwidth())
+            .attr("fill", "#36a2eb");
+    }
+
+    function getD3Data() {
+        d3.json('/budget')
+            .then(data => {
+                createD3Chart(data.myBudget);
+            })
+            .catch(error => {
+                console.error("Error loading D3 data:", error);
+            });
+    }
+
+    getD3Data();
+</script>
+
 </body>
 </html>
