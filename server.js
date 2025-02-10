@@ -2,28 +2,25 @@
 
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
+
 const app = express();
 const port = 3000;
 
 app.use('/', express.static('public'));
 
-const budget = {
-    myBudget: [
-    {
-        title: 'Eat out',
-        budget: 30
-    },
+const budgetFilePath = path.join(__dirname, 'budgetdata.json');
 
-    {
-        title: 'Rent',
-        budget: 350
-    },
-    
-    {
-        title: 'Groceries',
-        budget: 90
-    },
-]};
+app.get('/budget', (req, res) => {
+    fs.readFile(budgetFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading budget data:', err);
+            return res.status(500).json({ error: 'Failed to load budget data' });
+        }
+        res.json(JSON.parse(data));
+    });
+});
     
 
 app.get('/hello', (req, res) => {
