@@ -55,7 +55,7 @@ app.post('/budget', async (req, res) => {
         const { title, value, color } = req.body;
 
         if (!title || !value || !color) {
-            console.log("❌ Validation Error: Missing fields");
+            console.log("Validation Error: Missing fields");
             return res.status(400).json({ error: "All fields (title, value, color) are required" });
         }
 
