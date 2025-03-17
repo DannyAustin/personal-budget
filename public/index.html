@@ -129,14 +129,13 @@
         }
 
         function getBudget() {
-            axios.get('http://localhost:3000/budget')
-            .then(function (res) {
-                for (var i = 0; i < res.data.myBudget.length; i++) {
-                    dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
-                    dataSource.labels[i] = res.data.myBudget[i].title;
-                    createChart();
-                }
-            });
+            axios.get('/budget')
+                .then(function (res) {
+                    dataSource.datasets[0].data = res.data.myBudget.map(d => d.budget);
+                    dataSource.labels = res.data.myBudget.map(d => d.title);
+                createChart();
+            })
+            .catch(err => console.error("Error fetching budget data:", err));
         }
 
         getBudget();
@@ -228,12 +227,14 @@
     function getD3Data() {
         d3.json('/budget')
             .then(data => {
-                createD3Chart(data.myBudget);
+                if (data && data.myBudget) {
+                    createD3Chart(data.myBudget);
+                }
             })
             .catch(error => {
                 console.error("Error loading D3 data:", error);
             });
-    }
+        }
 
     getD3Data();
 </script>

@@ -8,6 +8,9 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+const mongoose = require('mongoose');
+const BudgetModel = require('./models/budget');
+
 app.use('/', express.static('public'));
 
 const budgetFilePath = path.join(__dirname, 'budgetdata.json');
@@ -27,8 +30,20 @@ app.get('/hello', (req, res) => {
     res.send('Hello World!');
 });
 
-app.get('/budget', (req, res) => {
-    res.json(budget);
+mongoose.connect("mongodb://localhost:27017/personal-budget", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log("MongoDB Connected"))
+  .catch(err => console.error("MongoDB Connection Error:", err));
+
+app.get('/budget', async (req, res) => {
+    try {
+        const budgetData = await BudgetModel.find();
+        res.json({ myBudget: budgetData });
+    } catch (err) {
+        console.error("Error fetching budget data:", err);
+        res.status(500).json({ error: "Failed to fetch budget data" });
+    }
 });
 
 app.listen(port, () => {
